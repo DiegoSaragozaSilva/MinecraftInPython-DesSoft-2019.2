@@ -13,26 +13,24 @@ class main(ShowBase):
 
     def __init__(self):
         ShowBase.__init__(self)
-        base.setBackgroundColor(0, 0, 1)
-        self.blocksIds = dict()
+        base.setBackgroundColor(41 / 255, 148 / 255, 255 / 255)
         self.MainNode = render.attachNewNode('MainNode')
+        self.blocksNode = self.MainNode.attachNewNode('blocksNode')
         self.xoffset = 0
         self.yoffset = 0
         self.playerSpeed = 0
-        self.PickerTraverser = CollisionTraverser()
-        self.CollisionQueue = CollisionHandlerQueue()
-        self.PickRay = CollisionRay()
-        self.PickNode = CollisionNode('pickRay')
-        self.mouseNode = base.mouseWatcherNode
-        self.wordGen = worldGenerator(self.MainNode, self.blocksIds, taskMgr)
-        self.player = player(0, 0, 10, taskMgr, self.accept, render,
-                             self.PickerTraverser, self.CollisionQueue,
-                             self.PickRay, self.PickNode, self.mouseNode,
-                             self.MainNode, self.blocksIds)
+        self.player = player(1, 1, 5, taskMgr, self.accept, self.MainNode, self.blocksNode)
+        self.worldGen = worldGenerator(self.MainNode, taskMgr, self.player, self.blocksNode)
         self.heading = 0
         self.pitch = 0
         self.row = 0
-        world.setupLights(self)
+        self.world = world(DisplayRegion.getPixelWidth, DisplayRegion.getPixelHeight)
+        #self.world.setupLights()
+        taskMgr.add(self.updateDebugMode, 'updateDebugMode')
+
+    def updateDebugMode(self, task):
+        self.world.debugMode(False, [self.worldGen.cToRender, self.worldGen.cToDelete, self.worldGen.worldChuncks])
+        return task.cont
 
 app = main()
 app.run()
