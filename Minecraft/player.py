@@ -11,6 +11,7 @@ class player():
         self.yoff = 0
         self.zoff = 0
         self.px, self.py = 0, 0
+        self.jumping = False
         self.accept = accept
         self.taskMgr = taskMgr
         self.MainNode = MainNode
@@ -22,8 +23,9 @@ class player():
         self.backward_button = KeyboardButton.ascii_key('s')
         self.right_button = KeyboardButton.ascii_key('d')
         self.left_button = KeyboardButton.ascii_key('a')
-        self.fly_button = KeyboardButton.ascii_key(' ')
-        self.gravityAcc = 0.1
+        self.jump_button = KeyboardButton.ascii_key(' ')
+        self.gravityAcc = 0.15
+        self.playerSpeed = 0.2
         self.cTrav = CollisionTraverser()
         
         self.setupCollisions()
@@ -60,22 +62,30 @@ class player():
         playerXSpeed = 0
         playerYSpeed = 0
         if is_down(self.forward_button):
-            playerYSpeed = -0.1
+            playerYSpeed = -self.playerSpeed
         if is_down(self.backward_button):
-            playerYSpeed = 0.1
+            playerYSpeed = self.playerSpeed
         if is_down(self.right_button):
-            playerXSpeed = 0.1
+            playerXSpeed = self.playerSpeed
         if is_down(self.left_button):
-            playerXSpeed = -0.1
+            playerXSpeed = -self.playerSpeed
+        if is_down(self.jump_button):
+            if not self.jumping:
+                self.jumping = True
+                self.player.setZ(self.player, -1.75)
+
         self.player.setX(self.player, playerXSpeed)
         self.player.setY(self.player, playerYSpeed)
         
         entries = list(self.playerGroundHandler.entries)
         entries.sort(key=lambda x: x.getSurfacePoint(self.MainNode).getZ())
         if len(entries) > 0:
-            if entries[len(entries) - 1].getSurfacePoint(self.MainNode).getZ() + 0.5  + 1 < self.z:
+            print(entries[len(entries) - 1].getSurfacePoint(self.MainNode).getZ() -0.5, int(self.z))
+            if entries[len(entries) - 1].getSurfacePoint(self.MainNode).getZ() + 1.5 < int(self.z):
                 self.player.setZ(self.player, self.gravityAcc)
-        
+            else:
+                self.jumping = False
+
         base.cam.setPos(self.player.getPos())
         self.x = self.player.getX()
         self.y = self.player.getY()
@@ -89,7 +99,7 @@ class player():
 
     def setupCollisions(self):
         self.playerCol = CollisionNode('player')
-        self.playerCol.addSolid(CollisionBox(0, 1.1, 1.1, 1.1))
+        self.playerCol.addSolid(CollisionBox(0, 1.25, 1.25, 2))
         self.playerCol.setFromCollideMask(CollideMask.bit(0))
         self.playerCol.setIntoCollideMask(CollideMask.allOff())
         self.playerColNp = self.player.attachNewNode(self.playerCol)
@@ -100,8 +110,8 @@ class player():
         self.cTrav.addCollider(self.playerColNp, self.playerPusher)
 
         self.playerGroundRay = CollisionRay()
-        self.playerGroundRay.setOrigin(0, 0, 9)
-        self.playerGroundRay.setDirection(0, 0, -1)
+        self.playerGroundRay.setOrigin(0, 0, 0)
+        self.playerGroundRay.setDirection(0, 0, 1)
         self.playerGroundCol = CollisionNode('playerRay')
         self.playerGroundCol.addSolid(self.playerGroundRay)
         self.playerGroundCol.setFromCollideMask(CollideMask.bit(0))
@@ -110,4 +120,5 @@ class player():
         self.playerGroundHandler = CollisionHandlerQueue()
         self.cTrav.addCollider(self.playerGroundColNp, self.playerGroundHandler)
 
+        self.playerGroundColNp.show()
         self.playerColNp.show()

@@ -8,7 +8,7 @@ from itertools import chain
 class worldGenerator():
 
     def __init__(self, MainNode, taskMgr, player, blocksNode):
-        self.world = PerlinNoise2(25, 25)
+        self.world = PerlinNoise2(100, 100)
         self.player = player
         self.MainNode = MainNode
         self.blocksNode = blocksNode
@@ -17,11 +17,11 @@ class worldGenerator():
         self.blockModel.setCollideMask(BitMask32.bit(0)) 
         self.height = 10
         self.width = 10
-        self.worldChuncks = []
         self.taskMgr = taskMgr
+        self.worldChuncks = []
         self.cToRender = []
         self.cToDelete = []
-        self.renderDistance = 1
+        self.renderDistance = 2
 
         for i in range(self.width):
             for j in range(self.height):
