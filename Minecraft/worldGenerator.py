@@ -25,7 +25,6 @@ class worldGenerator():
 
         for i in range(self.width):
             for j in range(self.height):
-                print(i, j)
                 self.worldChuncks.append(chunck(self.world, self.MainNode, i, j, self.blockModel, self.blocksNode))
         
         self.blocksNode.clearModelNodes()

@@ -9,8 +9,9 @@ class world():
         self.chuncksToRenderText = OnscreenText(pos = (-1.08, 0.95), scale = 0.05, mayChange=True, bg = (214, 214, 194, 0.5), fg = (255, 255, 255, 255))
         self.chuncksToDeleteText = OnscreenText(pos = (-1.02, 0.85), scale = 0.05, mayChange=True, bg = (214, 214, 194, 0.5), fg = (255, 255, 255, 255))
         self.worldChuncksText = OnscreenText(pos = (-0.955, 0.75), scale = 0.05, mayChange=True, bg = (214, 214, 194, 0.5), fg = (255, 255, 255, 255))
+        self.ost = base.loader.loadSfx("assets/Sweden.mp3")
 
-    def setupLights(self):
+    def setupWorld(self):
         alight1 = DirectionalLight('dlight1')
         alight1.setColorTemperature(4500)
         alight2 = DirectionalLight('dlight2')
@@ -21,6 +22,7 @@ class world():
         alnp2.setHpr(0, -135, 0)
         render.setLight(alnp1)
         render.setLight(alnp2)
+        self.ost.play()
 
     def debugMode(self, state, worldChuncks):
         if state:

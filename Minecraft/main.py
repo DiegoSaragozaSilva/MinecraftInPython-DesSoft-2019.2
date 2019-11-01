@@ -25,7 +25,7 @@ class main(ShowBase):
         self.pitch = 0
         self.row = 0
         self.world = world(DisplayRegion.getPixelWidth, DisplayRegion.getPixelHeight)
-        self.world.setupLights()
+        self.world.setupWorld()
         taskMgr.add(self.updateDebugMode, 'updateDebugMode')
 
     def updateDebugMode(self, task):

@@ -80,7 +80,6 @@ class player():
         entries = list(self.playerGroundHandler.entries)
         entries.sort(key=lambda x: x.getSurfacePoint(self.MainNode).getZ())
         if len(entries) > 0:
-            print(entries[len(entries) - 1].getSurfacePoint(self.MainNode).getZ() -0.5, int(self.z))
             if entries[len(entries) - 1].getSurfacePoint(self.MainNode).getZ() + 1.5 < int(self.z):
                 self.player.setZ(self.player, self.gravityAcc)
             else:
