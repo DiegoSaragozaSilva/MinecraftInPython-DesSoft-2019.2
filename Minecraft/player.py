@@ -17,7 +17,7 @@ class player():
         self.MainNode = MainNode
         self.playerNode = self.MainNode.attachNewNode('playerNode')
         self.blocksNode = blocksNode
-        self.player = loader.loadModel("box.egg")
+        self.player = loader.loadModel("assets/box.egg")
         self.player.setScale(0.5, 0.5, 0.5)
         self.forward_button = KeyboardButton.ascii_key('w')
         self.backward_button = KeyboardButton.ascii_key('s')

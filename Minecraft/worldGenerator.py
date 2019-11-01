@@ -12,7 +12,7 @@ class worldGenerator():
         self.player = player
         self.MainNode = MainNode
         self.blocksNode = blocksNode
-        self.blockModel = loader.loadModel("box.egg")
+        self.blockModel = loader.loadModel("assets/box.egg")
         self.blockModel.reparentTo(self.blocksNode)
         self.blockModel.setCollideMask(BitMask32.bit(0)) 
         self.height = 10

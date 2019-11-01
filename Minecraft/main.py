@@ -29,7 +29,7 @@ class main(ShowBase):
         taskMgr.add(self.updateDebugMode, 'updateDebugMode')
 
     def updateDebugMode(self, task):
-        self.world.debugMode(False, [self.worldGen.cToRender, self.worldGen.cToDelete, self.worldGen.worldChuncks])
+        self.world.debugMode(True, [self.worldGen.cToRender, self.worldGen.cToDelete, self.worldGen.worldChuncks])
         return task.cont
 
 app = main()
