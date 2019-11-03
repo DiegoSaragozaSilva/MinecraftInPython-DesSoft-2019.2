@@ -1,4 +1,5 @@
 from panda3d.core import*
+import copy
 
 class Block():
     def __init__(self, x, y, z, t, MainNode, blockModel, blocksNode):
@@ -10,11 +11,9 @@ class Block():
         self.MainNode = MainNode
         self.blocksNode = blocksNode
         self.texlocation = ''
-        self.blockModel = blockModel
-        self.createBlock()
+        self.blockModel = copy.copy(blockModel)
 
-    def createBlock(self):
-        self.placeholder = self.blocksNode.attachNewNode("block")
+    def getTexture(self):
         if self.t == "grass":
             self.texlocation = "textures/grass.png"
 
@@ -37,13 +36,12 @@ class Block():
             self.texlocation = "textures/water.png"
 
     def updateBlock(self):
-        self.createBlock()
+        self.getTexture()
         self.t = loader.loadTexture(self.texlocation)
-        self.placeholder.setTexture(self.t)
-        self.placeholder.setScale(0.5, 0.5, 0.5)
-        self.placeholder.setPos(self.x, self.y, self.z)
-        self.placeholder.reparentTo(self.MainNode)
-        self.blockModel.instanceTo(self.placeholder)
+        self.blockModel.setTexture(self.t)
+        self.blockModel.setScale(0.5, 0.5, 0.5)
+        self.blockModel.setPos(self.x, self.y, self.z)
+        self.blockModel.reparentTo(self.blocksNode)
 
     def destroyBlock(self):
-        self.placeholder.detachNode()
+        self.blockModel.detachNode()

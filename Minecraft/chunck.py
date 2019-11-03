@@ -25,24 +25,22 @@ class chunck():
                 if z >= 2:
                     self.blocks.append(Block(
                         i, j, z, 'grass', self.MainNode, self.blockModel, self.blocksNode))
-                     
                     if (treeRandomizer <= 1):
-                        self.createTree(i, j, z)
+                       self.createTree(i, j, z)
                     self.fill(i, j, z - 1)
                 elif z == 1:
                     self.blocks.append(Block(
                         i, j, z, 'sand', self.MainNode, self.blockModel, self.blocksNode))
-                     
+
                     self.fill(i, j, z - 1)
                 elif z <= 0:
                     self.blocks.append(Block(
                         i, j, 0, 'water', self.MainNode, self.blockModel, self.blocksNode))
-                     
+
                     self.blocks.append(Block(
                         i, j, -1, 'gravel', self.MainNode, self.blockModel, self.blocksNode))
-                     
+
                     self.fill(i, j, -1)
-                    #self.fill(i, j, z - 1)
             
 
     def fill(self, i, j, z):

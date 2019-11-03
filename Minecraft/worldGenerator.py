@@ -13,8 +13,7 @@ class worldGenerator():
         self.MainNode = MainNode
         self.blocksNode = blocksNode
         self.blockModel = loader.loadModel("assets/box.egg")
-        self.blockModel.reparentTo(self.blocksNode)
-        self.blockModel.setCollideMask(BitMask32.bit(0)) 
+        self.blockModel.setCollideMask(BitMask32.bit(0))
         self.height = 10
         self.width = 10
         self.taskMgr = taskMgr
@@ -26,8 +25,10 @@ class worldGenerator():
         for i in range(self.width):
             for j in range(self.height):
                 self.worldChuncks.append(chunck(self.world, self.MainNode, i, j, self.blockModel, self.blocksNode))
-        
+
+        self.blocksNode.flattenStrong()
         self.blocksNode.clearModelNodes()
+
         self.taskMgr.add(self.checkRender, 'checkRender')
 
     def checkRender(self, task):
