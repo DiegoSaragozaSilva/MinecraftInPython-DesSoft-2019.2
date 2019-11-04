@@ -22,25 +22,25 @@ class chunck():
             for j in range(self.n2 * self.height, self.n2 * self.height + self.height):
                 z = float('{0:.1f}'.format(self.returnZ(self.world.noise(i, j))))
                 treeRandomizer = random.randint(0, 100)
-                if z >= 2:
+                if z >= 1:
                     self.blocks.append(Block(
                         i, j, z, 'grass', self.MainNode, self.blockModel, self.blocksNode))
                     if (treeRandomizer <= 1):
                        self.createTree(i, j, z)
                     self.fill(i, j, z - 1)
-                elif z == 1:
+                elif z == 0:
                     self.blocks.append(Block(
                         i, j, z, 'sand', self.MainNode, self.blockModel, self.blocksNode))
 
                     self.fill(i, j, z - 1)
-                elif z <= 0:
+                elif z <= -1:
                     self.blocks.append(Block(
-                        i, j, 0, 'water', self.MainNode, self.blockModel, self.blocksNode))
+                        i, j, -1, 'water', self.MainNode, self.blockModel, self.blocksNode))
 
                     self.blocks.append(Block(
-                        i, j, -1, 'gravel', self.MainNode, self.blockModel, self.blocksNode))
+                        i, j, -2, 'gravel', self.MainNode, self.blockModel, self.blocksNode))
 
-                    self.fill(i, j, -1)
+                    self.fill(i, j, -2)
             
 
     def fill(self, i, j, z):

@@ -8,7 +8,7 @@ from itertools import chain
 class worldGenerator():
 
     def __init__(self, MainNode, taskMgr, player, blocksNode):
-        self.world = PerlinNoise2(100, 100)
+        self.world = PerlinNoise2(50, 50)
         self.player = player
         self.MainNode = MainNode
         self.blocksNode = blocksNode
