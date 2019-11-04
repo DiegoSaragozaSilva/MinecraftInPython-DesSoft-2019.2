@@ -28,6 +28,7 @@ class Block():
 
         if self.t == "leaf":
             self.texlocation = "textures/leaf.png"
+            self.blockModel.setTransparency(True)
 
         if self.t == "dirt":
             self.texlocation = "textures/dirt.png"
@@ -38,8 +39,8 @@ class Block():
     def updateBlock(self):
         self.getTexture()
         self.t = loader.loadTexture(self.texlocation)
+        self.t.setMagfilter(SamplerState.FT_nearest)
         self.blockModel.setTexture(self.t)
-        self.blockModel.setScale(0.5, 0.5, 0.5)
         self.blockModel.setPos(self.x, self.y, self.z)
         self.blockModel.reparentTo(self.blocksNode)
 
