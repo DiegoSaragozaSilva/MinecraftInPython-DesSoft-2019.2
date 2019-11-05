@@ -4,14 +4,17 @@ from direct.gui.OnscreenText import OnscreenText
 
 class world():
     def __init__(self, screenWidth, screenHeight):
+        #Tamanho do mundo
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
+        #Texto no jogo mostrando a quantidade de chunks que estao renderizados e chunks que ainda nao estao sendo renderizados
         self.chuncksToRenderText = OnscreenText(pos = (-1.08, 0.95), scale = 0.05, mayChange=True, bg = (214, 214, 194, 0.5), fg = (255, 255, 255, 255))
         self.chuncksToDeleteText = OnscreenText(pos = (-1.02, 0.85), scale = 0.05, mayChange=True, bg = (214, 214, 194, 0.5), fg = (255, 255, 255, 255))
         self.worldChuncksText = OnscreenText(pos = (-0.955, 0.75), scale = 0.05, mayChange=True, bg = (214, 214, 194, 0.5), fg = (255, 255, 255, 255))
         self.ost = base.loader.loadSfx("assets/Sweden.mp3")
 
     def setupWorld(self):
+        #criacao de atributos esteticos do mundo, como iluminacao natural
         alight1 = DirectionalLight('dlight1')
         alight1.setColorTemperature(4500)
         alight2 = DirectionalLight('dlight2')
@@ -22,9 +25,11 @@ class world():
         alnp2.setHpr(0, -135, 0)
         render.setLight(alnp1)
         render.setLight(alnp2)
+        #inicio da musica no jogo
         self.ost.play()
 
     def debugMode(self, state, worldChuncks):
+        #Funcao que efetivamente mostra o valor dos chunks carregadoes e nao na tela
         if state:
             render = 'Chuncks rendered: {0}'.format(str(len(worldChuncks[0])))
             delete = 'Chuncks not rendered: {0}'.format(str(len(worldChuncks[1])))
