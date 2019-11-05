@@ -29,6 +29,8 @@ class worldGenerator():
         self.worldChuncks = []
         self.cToRender = []
         self.cToDelete = []
+        self.CB = []
+        
 
         #criacao do parametro da distancia de chuncks que o plaver consegue ver a partir dde sue coordenada
         self.renderDistance = 2
@@ -37,6 +39,9 @@ class worldGenerator():
         for i in range(self.width):
             for j in range(self.height):
                 self.worldChuncks.append(chunck(self.world, self.MainNode, i, j, self.blockModel, self.blocksNode))
+
+        for i in range(len(self.worldChuncks) - 1):
+            self.CB.append(self.worldChuncks[i].blocks)
 
         self.blocksNode.flattenStrong()
         self.blocksNode.clearModelNodes()

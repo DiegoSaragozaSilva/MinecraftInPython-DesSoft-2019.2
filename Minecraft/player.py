@@ -30,14 +30,21 @@ class player():
         self.right_button = KeyboardButton.ascii_key('d')
         self.left_button = KeyboardButton.ascii_key('a')
         self.jump_button = KeyboardButton.ascii_key(' ')
+        self.accept('mouse1', self.onMouseTask)
         #cosntantes que afetam o jogador(Gravidade e a sua velocidade de moviemnto)
         self.gravityAcc = 0.15
         self.playerSpeed = 0.2
 
-        #Barreira de colissao criada no player
+        #Barreira de colisao criada no player
         self.cTrav = CollisionTraverser()
-        
+        #raio que detecta um bloco no certro da tela
+        self.PickRay = CollisionRay()
+        self.PickNode = CollisionNode('breakerRay')
+        self.PickerTraverser = CollisionTraverser()
+        self.CollisionQueue = CollisionHandlerQueue()
+        #criando o atributo de desttruir blocos
         self.setupCollisions()
+        self.setupBlockDestroyer()
         self.createPlayer()
         #Criacao da camera em terceira pessoa que se move baseada na movimentacao do jogador
         self.taskMgr.add(self.thirdPersonCameraTask, 'thirdPersonCameraTask')
@@ -142,3 +149,31 @@ class player():
 
         self.playerGroundColNp.show()
         self.playerColNp.show()
+    #Garantindo que esxite um bloco na mira que pode ser destruido com o mause1
+    def setupBlockDestroyer(self):
+        self.PickRay.setOrigin(base.cam.getPos(self.MainNode))
+        self.PickRay.setDirection(self.MainNode.getRelativeVector(base.cam, Vec3(0, 1, 0)))
+        self.PickNode.addSolid(self.PickRay)
+        self.PickNP = base.cam.attachNewNode(self.PickNode)
+        self.PickNode.setFromCollideMask(CollideMask.bit(0))
+        self.PickerTraverser.addCollider(self.PickNP, self.CollisionQueue)
+    #funcao que destroi os blocos dentro do centro da tela
+    def onMouseTask(self):
+        print('a')
+        self.mouseNode = base.mouseWatcherNode
+        #verificacao do mause1 sendo apertado
+        if(self.mouseNode.hasMouse()):
+            print('b')
+            mpos = base.mouseWatcherNode.getMouse()
+            self.PickRay.setFromLens(base.camNode, mpos.getX(), mpos.getY())
+            self.PickerTraverser.traverse(render)
+            #Garantindo que existe um bloco sendo colidido e portanto, no processo de ser deletado
+            if(self.CollisionQueue.getNumEntries() >= 1):
+                print('c')
+                self.CollisionQueue.sortEntries()
+                entry = self.CollisionQueue.getEntry(0)
+                pickedObj = entry.getIntoNodePath()
+                #deletando o bloco
+                if pickedObj is not None:
+                    print('d')
+                    pickedObj.removeNode()
