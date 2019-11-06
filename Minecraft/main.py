@@ -29,5 +29,6 @@ class main(ShowBase):
         self.world.debugMode(True, [self.worldGen.cToRender, self.worldGen.cToDelete, self.worldGen.worldChuncks])
         return task.cont
 
+
 app = main()
 app.run()

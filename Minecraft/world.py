@@ -1,6 +1,7 @@
 from block import Block
 from panda3d.core import*
 from direct.gui.OnscreenText import OnscreenText
+from direct.gui.OnscreenImage import OnscreenImage
 
 class world():
     def __init__(self, screenWidth, screenHeight, MainNode):
@@ -13,6 +14,11 @@ class world():
         self.worldChuncksText = OnscreenText(pos = (-0.955, 0.75), scale = 0.05, mayChange=True, bg = (214, 214, 194, 0.5), fg = (255, 255, 255, 255))
         self.ost = base.loader.loadSfx("assets/Sweden.mp3")
         self.MainNode = MainNode
+        #Criando a Crosshair
+        print(DisplayRegion.getPixelHeight)
+        print(DisplayRegion.getPixelWidth)
+        self.Crosshair=OnscreenImage(image="textures/crosshair.png",pos=(0,0,0),scale=0.05)
+        self.Crosshair.setTransparency(TransparencyAttrib.MAlpha)
 
     def setupWorld(self):
         #criacao de atributos esteticos do mundo, como iluminacao natural

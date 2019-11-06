@@ -59,6 +59,11 @@ class player():
         self.player.setP(180)
         #desabilitar a movimentacao pelo mouse padrão do Panda 3D
         base.disableMouse()
+        props = WindowProperties()
+
+        props.setCursorHidden(True)
+
+        base.win.requestProperties(props)
 
     #Funcionamente da camera baseada na movimentacao do mause
     def thirdPersonCameraTask(self, task):
