@@ -5,7 +5,7 @@ import random
 class chunck():
     def __init__(self, n, MainNode, i, j, blockModel, blocksNode):
         #atributos de uma chunk(profundidade,tamanho e largura )
-        self.maxDepth = 0
+        self.maxDepth = 5
         self.width = 16
         self.height = 16
         self.world = n

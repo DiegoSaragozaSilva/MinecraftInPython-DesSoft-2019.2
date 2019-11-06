@@ -70,9 +70,9 @@ class player():
         if (x - self.px != 0 and y - self.py != 0):
             self.xoffset = x - float(base.win.getXSize() / 2)
             self.yoffset = y - float(base.win.getYSize() / 2)
-            base.cam.setHpr(base.cam.getH() - self.xoffset, base.cam.getP() - self.yoffset, 0)
-            self.player.setH(self.player.getH() - self.xoffset)
-        #caso contrario, movendo a camera baseando-se nos iputs de movimento    
+            base.cam.setHpr(base.cam.getH() - self.xoffset * 0.15, base.cam.getP() - self.yoffset * 0.15, 0)
+            self.player.setH(self.player.getH() - self.xoffset * 0.15)
+        #caso contrario, movendo a camera baseando-se nos inputs de movimento    
         else:
             base.win.movePointer(0, int(base.win.getXSize() / 2), int(base.win.getYSize() / 2))
         self.px, self.py = x, y

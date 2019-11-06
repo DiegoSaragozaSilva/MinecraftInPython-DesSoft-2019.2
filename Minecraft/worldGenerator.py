@@ -9,7 +9,8 @@ class worldGenerator():
 
     def __init__(self, MainNode, taskMgr, player, blocksNode):
         #criacao do mundo como um perilinNoise de tamanhos digitados
-        self.world = PerlinNoise2(50, 50)
+        self.Forest = PerlinNoise2(50, 50)
+        self.Desert = PerlinNoise2(80, 80)
 
         #dentro do mundo nos temos o atributo do player
         self.player = player
@@ -29,7 +30,6 @@ class worldGenerator():
         self.worldChuncks = []
         self.cToRender = []
         self.cToDelete = []
-        self.CB = []
         
 
         #criacao do parametro da distancia de chuncks que o plaver consegue ver a partir dde sue coordenada
@@ -38,10 +38,7 @@ class worldGenerator():
         #Criacao dos chunks dentro do espcado do mundo
         for i in range(self.width):
             for j in range(self.height):
-                self.worldChuncks.append(chunck(self.world, self.MainNode, i, j, self.blockModel, self.blocksNode))
-
-        for i in range(len(self.worldChuncks) - 1):
-            self.CB.append(self.worldChuncks[i].blocks)
+                self.worldChuncks.append(chunck(self.Forest, self.MainNode, i, j, self.blockModel, self.blocksNode))
 
         self.blocksNode.flattenStrong()
         self.blocksNode.clearModelNodes()

@@ -21,8 +21,8 @@ class main(ShowBase):
         self.blocksNode = self.MainNode.attachNewNode('blocksNode')
         self.player = player(1, 1, 5, taskMgr, self.accept, self.MainNode, self.blocksNode)
         self.worldGen = worldGenerator(self.MainNode, taskMgr, self.player, self.blocksNode)
-        self.world = world(DisplayRegion.getPixelWidth, DisplayRegion.getPixelHeight)
-        #self.world.setupWorld()
+        self.world = world(DisplayRegion.getPixelWidth, DisplayRegion.getPixelHeight, self.MainNode)
+        self.world.setupWorld()
         taskMgr.add(self.updateDebugMode, 'updateDebugMode')
 
     def updateDebugMode(self, task):

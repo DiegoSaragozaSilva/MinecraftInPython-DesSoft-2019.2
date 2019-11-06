@@ -3,7 +3,7 @@ from panda3d.core import*
 from direct.gui.OnscreenText import OnscreenText
 
 class world():
-    def __init__(self, screenWidth, screenHeight):
+    def __init__(self, screenWidth, screenHeight, MainNode):
         #Tamanho do mundo
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
@@ -12,19 +12,14 @@ class world():
         self.chuncksToDeleteText = OnscreenText(pos = (-1.02, 0.85), scale = 0.05, mayChange=True, bg = (214, 214, 194, 0.5), fg = (255, 255, 255, 255))
         self.worldChuncksText = OnscreenText(pos = (-0.955, 0.75), scale = 0.05, mayChange=True, bg = (214, 214, 194, 0.5), fg = (255, 255, 255, 255))
         self.ost = base.loader.loadSfx("assets/Sweden.mp3")
+        self.MainNode = MainNode
 
     def setupWorld(self):
         #criacao de atributos esteticos do mundo, como iluminacao natural
-        alight1 = DirectionalLight('dlight1')
-        alight1.setColorTemperature(4500)
-        alight2 = DirectionalLight('dlight2')
-        alight2.setColorTemperature(4500)
-        alnp1 = render.attachNewNode(alight1)
-        alnp2 = render.attachNewNode(alight2)
-        alnp1.setHpr(0, -45, 0)
-        alnp2.setHpr(0, -135, 0)
-        render.setLight(alnp1)
-        render.setLight(alnp2)
+        alight = AmbientLight('alight')
+        alight.setColor(VBase4(255 / 255, 87 / 255, 3 / 255, 1))
+        alnp = self.MainNode.attachNewNode(alight)
+        self.MainNode.setLight(alnp)
         #inicio da musica no jogo
         self.ost.play()
 
