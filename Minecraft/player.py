@@ -52,21 +52,21 @@ class player():
 
     #criacao do player dentro do mmundo
     def createPlayer(self):
-        #Spawnando o jogador em coordenadas especificas+fixando o mause ao centro(efetivaemnte desabilitando o mesmo para sair do jogo sem um ALT+TAB)
+        #Spawnando o jogador em coordenadas especificas+fixando o mouse ao centro(efetivaemnte desabilitando o mesmo para sair do jogo sem um ALT+TAB)
         self.player.reparentTo(self.playerNode)
         self.player.setPos(self.x, self.y, self.z)
         base.cam.setPos(0, 0, 10)
         self.player.setP(180)
-        #disabilitar a movimentacao padrao do Panda 3d
+        #desabilitar a movimentacao pelo mouse padrão do Panda 3D
         base.disableMouse()
 
     #Funcionamente da camera baseada na movimentacao do mause
     def thirdPersonCameraTask(self, task):
-        #calcuo do movimento feito peloo jogador quando usa o mause
+        #calculo do movimento feito pelo jogador quando usa o mouse
         md = base.win.getPointer(0)
         x = md.getX()
         y = md.getY()
-        #garantindo que a camera se mantenha parada se o jogador deixar de mexer no mause
+        #garantindo que a camera se mantenha parada se o jogador deixar de mexer no mouse
         if (x - self.px != 0 and y - self.py != 0):
             self.xoffset = x - float(base.win.getXSize() / 2)
             self.yoffset = y - float(base.win.getYSize() / 2)
@@ -78,7 +78,7 @@ class player():
         self.px, self.py = x, y
         return task.cont
 
-    #   Como que o jogador se movimenta pelo mundo
+    #Como que o jogador se movimenta pelo mundo
     def movePlayer(self, task):
         self.cTrav.traverse(self.MainNode)
         #Se nem um botando estiver sendo apertado, a velocidade do player tanto no eixo X quanto Y eh 0
@@ -99,10 +99,10 @@ class player():
             if not self.jumping:
                 self.jumping = True
                 self.player.setZ(self.player, -1.75)
-        #atualizacao das coordenadas do jogador
+        #Atualizacao das coordenadas do jogador
         self.player.setX(self.player, playerXSpeed)
         self.player.setY(self.player, playerYSpeed)
-        #intereacao do movimento do jogador com a forca de gravidade e o topo dos blocos
+        #Intereacao do movimento do jogador com a forca de gravidade e o topo dos blocos
         entries = list(self.playerGroundHandler.entries)
         entries.sort(key=lambda x: x.getSurfacePoint(self.MainNode).getZ())
         if len(entries) > 0:
@@ -118,7 +118,7 @@ class player():
         playerXSpeed = 0
         playerYSpeed = 0
         return task.cont
-    #funcao que retorna as coordenadas x e y do jogador a cada frame
+    #funcao que retorna as coordenadas x e y do jogador
     def returnPos(self):
         return [self.x, self.y]
 
@@ -126,7 +126,7 @@ class player():
     def setupCollisions(self):
         self.playerCol = CollisionNode('player')
         #criacao da barreira de colissao que tem a sua origem no potno central do jogador
-        self.playerCol.addSolid(CollisionBox(0, 1.25, 1.25, 2))
+        self.playerCol.addSolid(CollisionBox(0, 0.5, 0.5, 0.5))
         self.playerCol.setFromCollideMask(CollideMask.bit(0))
         self.playerCol.setIntoCollideMask(CollideMask.allOff())
         self.playerColNp = self.player.attachNewNode(self.playerCol)
