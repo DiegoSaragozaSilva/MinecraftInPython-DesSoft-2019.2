@@ -1,6 +1,7 @@
 from chunck import chunck
 from player import player
 from world import world
+import random
 from panda3d.core import*
 import numpy as np
 from itertools import chain 
@@ -11,6 +12,7 @@ class worldGenerator():
         #criacao do mundo como um perilinNoise de tamanhos digitados
         self.Forest = PerlinNoise2(50, 50)
         self.Desert = PerlinNoise2(80, 80)
+        self.Snow   = PerlinNoise2(35, 100)
 
         #dentro do mundo nos temos o atributo do player
         self.player = player
@@ -43,6 +45,7 @@ class worldGenerator():
         self.blocksNode.flattenStrong()
         self.blocksNode.clearModelNodes()
 
+        self.spawnPCToshi()
         self.taskMgr.add(self.checkRender, 'checkRender')
     #Verificacao de renderizacao de todos os chunks
     def checkRender(self, task):
@@ -88,3 +91,14 @@ class worldGenerator():
         self.chuncksToDelete = list(set(self.worldChuncks) - set(self.chuncksToRender))
 
         return self.chuncksToRender, self.chuncksToDelete
+
+    def spawnPCToshi(self):
+        self.pcdotoshi = loader.loadModel('assets/toshismac.egg')
+        self.pcdotoshi.setCollideMask(BitMask32.bit(0))
+        self.pcdotoshi.reparentTo(self.MainNode)
+        self.t = loader.loadTexture('textures/toshismac.png')
+        self.t.setMagfilter(SamplerState.FT_nearest)
+        self.pcdotoshi.setTexture(self.t)
+        self.pcdotoshi.setScale(0.25, 0.25, 0.25)
+        self.pcdotoshi.setPos(random.randint(0, 16 * self.height), random.randint(0, 16 * self.width), random.randint(0, 10))
+        print(self.pcdotoshi.getPos())

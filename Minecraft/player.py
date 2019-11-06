@@ -164,21 +164,17 @@ class player():
         self.PickerTraverser.addCollider(self.PickNP, self.CollisionQueue)
     #funcao que destroi os blocos dentro do centro da tela
     def onMouseTask(self):
-        print('a')
         self.mouseNode = base.mouseWatcherNode
         #verificacao do mause1 sendo apertado
         if(self.mouseNode.hasMouse()):
-            print('b')
             mpos = base.mouseWatcherNode.getMouse()
             self.PickRay.setFromLens(base.camNode, mpos.getX(), mpos.getY())
             self.PickerTraverser.traverse(render)
             #Garantindo que existe um bloco sendo colidido e portanto, no processo de ser deletado
             if(self.CollisionQueue.getNumEntries() >= 1):
-                print('c')
                 self.CollisionQueue.sortEntries()
                 entry = self.CollisionQueue.getEntry(0)
                 pickedObj = entry.getIntoNodePath()
                 #deletando o bloco
                 if pickedObj is not None:
-                    print('d')
                     pickedObj.removeNode()
