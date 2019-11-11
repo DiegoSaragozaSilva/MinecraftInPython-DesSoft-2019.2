@@ -32,7 +32,7 @@ class player():
         self.jump_button = KeyboardButton.ascii_key(' ')
         self.accept('mouse1', self.onMouseTask)
         #cosntantes que afetam o jogador(Gravidade e a sua velocidade de moviemnto)
-        self.gravityAcc = 0.15
+        self.gravityAcc = 0.30
         self.playerSpeed = 0.2
 
         #Barreira de colisao criada no player
@@ -115,6 +115,8 @@ class player():
                 self.player.setZ(self.player, self.gravityAcc)
             else:
                 self.jumping = False
+        else:
+            self.player.setZ(self.player, self.gravityAcc)
         #Fixando a camera do centro da tela, se movendo tambem com o player
         base.cam.setPos(self.player.getPos())
         self.x = self.player.getX()
@@ -162,6 +164,7 @@ class player():
         self.PickNP = base.cam.attachNewNode(self.PickNode)
         self.PickNode.setFromCollideMask(CollideMask.bit(0))
         self.PickerTraverser.addCollider(self.PickNP, self.CollisionQueue)
+
     #funcao que destroi os blocos dentro do centro da tela
     def onMouseTask(self):
         self.mouseNode = base.mouseWatcherNode
@@ -177,4 +180,6 @@ class player():
                 pickedObj = entry.getIntoNodePath()
                 #deletando o bloco
                 if pickedObj is not None:
-                    pickedObj.removeNode()
+                    pickedObj.getParent().getPos()
+                    if math.sqrt((abs(pickedObj.getParent().getX() - self.player.getX()))**2 + (pickedObj.getParent().getY() - self.player.getY())**2 + (pickedObj.getParent().getZ() - abs(self.player.getZ()))**2) <= 8:
+                        pickedObj.removeNode()
