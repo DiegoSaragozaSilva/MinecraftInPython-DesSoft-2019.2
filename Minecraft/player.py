@@ -1,6 +1,6 @@
 from panda3d.core import*
 import math
-
+import world
 
 class player():
     def __init__(self, x, y, z, taskMgr, accept, MainNode, blocksNode):
@@ -182,4 +182,7 @@ class player():
                 if pickedObj is not None:
                     pickedObj.getParent().getPos()
                     if math.sqrt((abs(pickedObj.getParent().getX() - self.player.getX()))**2 + (pickedObj.getParent().getY() - self.player.getY())**2 + (pickedObj.getParent().getZ() - abs(self.player.getZ()))**2) <= 8:
+                        if str(pickedObj.getParent()) == 'render/MainNode/toshismac.egg':
+                            print("Voce ganhou meu consagrado")
                         pickedObj.removeNode()
+                        
