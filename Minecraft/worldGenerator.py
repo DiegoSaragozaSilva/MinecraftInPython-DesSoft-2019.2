@@ -102,4 +102,3 @@ class worldGenerator():
         self.pcdotoshi.setScale(0.25, 0.25, 0.25)
         #self.pcdotoshi.setPos(random.randint(0, 16 * self.height), random.randint(0, 16 * self.width), random.randint(0, 10))
         self.pcdotoshi.setPos(2, 2, 2)
-        print(self.pcdotoshi)

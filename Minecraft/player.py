@@ -35,6 +35,8 @@ class player():
         self.gravityAcc = 0.30
         self.playerSpeed = 0.2
 
+        self.victory = False
+
         #Barreira de colisao criada no player
         self.cTrav = CollisionTraverser()
         #raio que detecta um bloco no certro da tela
@@ -183,6 +185,6 @@ class player():
                     pickedObj.getParent().getPos()
                     if math.sqrt((abs(pickedObj.getParent().getX() - self.player.getX()))**2 + (pickedObj.getParent().getY() - self.player.getY())**2 + (pickedObj.getParent().getZ() - abs(self.player.getZ()))**2) <= 8:
                         if str(pickedObj.getParent()) == 'render/MainNode/toshismac.egg':
-                            print("Voce ganhou meu consagrado")
+                            self.victory = True
                         pickedObj.removeNode()
                         
