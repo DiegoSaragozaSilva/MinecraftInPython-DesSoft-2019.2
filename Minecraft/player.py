@@ -3,7 +3,7 @@ import math
 import world
 
 class player():
-    def __init__(self, x, y, z, taskMgr, accept, MainNode, blocksNode):
+    def __init__(self, x, y, z, taskMgr, accept, MainNode, blocksNode, PickerRayList):
         #posicao do player
         self.x = x * 2
         self.y = y * 2
@@ -40,10 +40,10 @@ class player():
         #Barreira de colisao criada no player
         self.cTrav = CollisionTraverser()
         #raio que detecta um bloco no certro da tela
-        self.PickRay = CollisionRay()
-        self.PickNode = CollisionNode('breakerRay')
-        self.PickerTraverser = CollisionTraverser()
-        self.CollisionQueue = CollisionHandlerQueue()
+        self.PickRay = PickerRayList[0]
+        self.PickNode = PickerRayList[1]
+        self.PickerTraverser = PickerRayList[2]
+        self.CollisionQueue = PickerRayList[3]
         #criando o atributo de desttruir blocos
         self.setupCollisions()
         self.setupBlockDestroyer()
@@ -77,8 +77,8 @@ class player():
         if (x - self.px != 0 and y - self.py != 0):
             self.xoffset = x - float(base.win.getXSize() / 2)
             self.yoffset = y - float(base.win.getYSize() / 2)
-            base.cam.setHpr(base.cam.getH() - self.xoffset * 0.15, base.cam.getP() - self.yoffset * 0.15, 0)
-            self.player.setH(self.player.getH() - self.xoffset * 0.15)
+            base.cam.setHpr(base.cam.getH() - self.xoffset * 0.05, base.cam.getP() - self.yoffset * 0.05, 0)
+            self.player.setH(self.player.getH() - self.xoffset * 0.05)
         #caso contrario, movendo a camera baseando-se nos inputs de movimento    
         else:
             base.win.movePointer(0, int(base.win.getXSize() / 2), int(base.win.getYSize() / 2))
@@ -188,3 +188,4 @@ class player():
                             self.victory = True
                         pickedObj.removeNode()
                         
+

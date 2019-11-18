@@ -19,14 +19,13 @@ class main(ShowBase):
         self.MainNode = render.attachNewNode('MainNode')
         #mais um sub nó, dessa vez dentro do propio mainNode
         self.blocksNode = self.MainNode.attachNewNode('blocksNode')
-        self.player = player(1, 1, 5, taskMgr, self.accept, self.MainNode, self.blocksNode)
-        self.worldGen = worldGenerator(self.MainNode, taskMgr, self.player, self.blocksNode)
+        self.worldGen = worldGenerator(self.MainNode, taskMgr, self.blocksNode, self.accept)
         self.world = world(DisplayRegion.getPixelWidth, DisplayRegion.getPixelHeight, self.MainNode)
         self.world.setupWorld()
         taskMgr.add(self.updateDebugMode, 'updateDebugMode')
 
     def updateDebugMode(self, task):
-        if self.player.victory == True:
+        if self.worldGen.player.victory == True:
             self.world.victoryRoyale()
         self.world.debugMode(True, [self.worldGen.cToRender, self.worldGen.cToDelete, self.worldGen.worldChuncks])
         return task.cont

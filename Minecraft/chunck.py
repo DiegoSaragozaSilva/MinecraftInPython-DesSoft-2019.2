@@ -147,3 +147,7 @@ class chunck():
         self.rendered = False
         for i in range(len(self.blocks) - 1):
             self.blocks[i].destroyBlock()
+
+    def createBlock(self, x, y, z):
+        self.blocks.append(Block(x, y, z, 'dirt', self.MainNode, self.blockModel, self.blocksNode))
+        self.blocks[len(self.blocks) - 1].updateBlock()
